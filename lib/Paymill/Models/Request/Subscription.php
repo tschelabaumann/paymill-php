@@ -422,7 +422,7 @@ class Subscription extends Base
     public function setMandateReference($mandateReference)
     {
         $this->_mandateReference = $mandateReference;
-        
+
         return $this;
     }
 

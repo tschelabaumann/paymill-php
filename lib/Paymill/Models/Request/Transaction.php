@@ -126,6 +126,11 @@ class Transaction extends Base
     private $_handling_amount;
 
     /**
+     * @var string
+     */
+    private $_mandateReference;
+
+    /**
      * Creates an instance of the transaction request model
      */
     function __construct()
@@ -154,13 +159,13 @@ class Transaction extends Base
     public function setAmount($amount)
     {
         $this->_amount = $amount;
-        
+
         return $this;
     }
 
     /**
      * Returns the transaction description
-     * 
+     *
      * @return string
      */
     public function getDescription()
@@ -170,9 +175,9 @@ class Transaction extends Base
 
     /**
      * Sets the transaction description
-     * 
+     *
      * @param string $description Description
-     * 
+     *
      * @return $this
      */
     public function setDescription($description)
@@ -524,6 +529,27 @@ class Transaction extends Base
     }
 
     /**
+     * Returns mandate reference
+     * @return string
+     */
+    public function getMandateReference()
+    {
+        return $this->_mandateReference;
+    }
+
+    /**
+     * Set mandate reference
+     * @param string $mandateReference
+     * @return \Paymill\Models\Request\Subscription
+     */
+    public function setMandateReference($mandateReference)
+    {
+        $this->_mandateReference = $mandateReference;
+
+        return $this;
+    }
+
+    /**
      * Returns an array of parameters customized for the given method name.
      *
      * @param string $method Method
@@ -572,6 +598,9 @@ class Transaction extends Base
                 }
                 if(!is_null($this->getHandlingAmount())) {
                     $parameterArray['handling_amount'] = $this->getHandlingAmount();
+                }
+                if (!is_null($this->getMandateReference())) {
+                    $parameterArray['mandate_reference'] = $this->getMandateReference();
                 }
                 break;
             case 'update':
