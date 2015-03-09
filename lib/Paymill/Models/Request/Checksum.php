@@ -35,6 +35,16 @@ class Checksum extends Base
     private $_description = null;
 
     /**
+     * @var string
+     */
+    private $_returnUrl = null;
+
+    /**
+     * @var string
+     */
+    private $_cancelUrl = null;
+
+    /**
      * @var null|string
      */
     private $_appId = null;
@@ -59,22 +69,27 @@ class Checksum extends Base
      */
     function __construct()
     {
-        $this->_serviceResource = 'checksum/';
+        $this->_serviceResource = 'checksums/';
     }
 
     /**
-     * @param string $amount
+     * Set amount
      *
-     * @return \Paymill\Models\Request\Checksum
+     * @param string $amount Amount in s the smallest unit (e.g. Cent)
+     *
+     * @return $this
      */
     public function setAmount($amount)
     {
         $this->_amount = $amount;
+
         return $this;
     }
 
     /**
-     * @return string
+     * Get amount
+     *
+     * @return string Amount in s the smallest unit (e.g. Cent)
      */
     public function getAmount()
     {
@@ -82,17 +97,22 @@ class Checksum extends Base
     }
 
     /**
+     * Set checksum type
+     *
      * @param string $checksumType
      *
-     * @return \Paymill\Models\Request\Checksum
+     * @return $this
      */
     public function setChecksumType($checksumType)
     {
         $this->_checksumType = $checksumType;
+
         return $this;
     }
 
     /**
+     * Get checksum type
+     *
      * @return string
      *
      * @return $this
@@ -103,18 +123,23 @@ class Checksum extends Base
     }
 
     /**
-     * @param array $currency
+     * Set currency
      *
-     * @return \Paymill\Models\Request\Checksum
+     * @param string $currency (alpha 3)
+     *
+     * @return $this
      */
     public function setCurrency($currency)
     {
         $this->_currency = $currency;
+
         return $this;
     }
 
     /**
-     * @return array
+     * Get currency
+     *
+     * @return string (alpha 3)
      */
     public function getCurrency()
     {
@@ -122,18 +147,23 @@ class Checksum extends Base
     }
 
     /**
-     * @param array $description
+     * Set description
      *
-     * @return \Paymill\Models\Request\Checksum
+     * @param string $description
+     *
+     * @return $this
      */
     public function setDescription($description)
     {
         $this->_description = $description;
+
         return $this;
     }
 
     /**
-     * @return array
+     * Get description
+     *
+     * @return string
      */
     public function getDescription()
     {
@@ -141,6 +171,56 @@ class Checksum extends Base
     }
 
     /**
+     * Get return url
+     *
+     * @return string
+     */
+    public function getReturnUrl()
+    {
+        return $this->_returnUrl;
+    }
+
+    /**
+     * Set return url
+     *
+     * @param string $returnUrl return url
+     *
+     * @return $this
+     */
+    public function setReturnUrl($returnUrl)
+    {
+        $this->_returnUrl = $returnUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get cancel url
+     *
+     * @return string
+     */
+    public function getCancelUrl()
+    {
+        return $this->_cancelUrl;
+    }
+
+    /**
+     * Set cancel url
+     *
+     * @param string $cancelUrl cancel url
+     *
+     * @return $this
+     */
+    public function setCancelUrl($cancelUrl)
+    {
+        $this->_cancelUrl = $cancelUrl;
+
+        return $this;
+    }
+
+    /**
+     * Set app ID
+     *
      * @param null|string $appId
      *
      * @return \Paymill\Models\Request\Checksum
@@ -148,10 +228,13 @@ class Checksum extends Base
     public function setAppId($appId)
     {
         $this->_appId = $appId;
+
         return $this;
     }
 
     /**
+     * Get app Id
+     *
      * @return null|string
      */
     public function getAppId()
@@ -160,17 +243,22 @@ class Checksum extends Base
     }
 
     /**
+     * Set fee amount
+     *
      * @param null|string $feeAmount
      *
-     * @return \Paymill\Models\Request\Checksum
+     * @return $this
      */
     public function setFeeAmount($feeAmount)
     {
         $this->_feeAmount = $feeAmount;
+
         return $this;
     }
 
     /**
+     * Get fee amount
+     *
      * @return null|string
      */
     public function getFeeAmount()
@@ -179,17 +267,22 @@ class Checksum extends Base
     }
 
     /**
+     * Set fee currency
+     *
      * @param null|string $feeCurrency
      *
-     * @return \Paymill\Models\Request\Checksum
+     * @return $this
      */
     public function setFeeCurrency($feeCurrency)
     {
         $this->_feeCurrency = $feeCurrency;
+
         return $this;
     }
 
     /**
+     * Get fee currency
+     *
      * @return null|string
      */
     public function getFeeCurrency()
@@ -198,17 +291,22 @@ class Checksum extends Base
     }
 
     /**
+     * Set fee payment
+     *
      * @param null|string $feePayment
      *
-     * @return \Paymill\Models\Request\Checksum
+     * @return $this
      */
     public function setFeePayment($feePayment)
     {
         $this->_feePayment = $feePayment;
+
         return $this;
     }
 
     /**
+     * get fee payment
+     *
      * @return null|string
      */
     public function getFeePayment()
@@ -225,41 +323,56 @@ class Checksum extends Base
      */
     public function parameterize($method)
     {
-        $parameterArray = array();
+        $parameterArray = [];
         switch ($method) {
             case 'getOne':
+                $parameterArray['count'] = 1;
+                $parameterArray['offset'] = 0;
+                break;
+            case 'getAll':
+                $parameterArray = $this->getFilter();
+                break;
+            case 'create':
                 if($this->getChecksumType()) {
                     $parameterArray['checksum_type'] = $this->getChecksumType();
                 }
 
                 if($this->getAmount()) {
-                    $parameterArray['amount']        = $this->getAmount();
+                    $parameterArray['amount'] = $this->getAmount();
                 }
 
                 if($this->getCurrency()) {
-                    $parameterArray['currency']      = $this->getCurrency();
+                    $parameterArray['currency'] = $this->getCurrency();
                 }
 
                 if($this->getDescription()){
-                    $parameterArray['description']   = $this->getDescription();
+                    $parameterArray['description'] = $this->getDescription();
+                }
+
+                if($this->getReturnUrl()){
+                    $parameterArray['return_url'] = $this->getReturnUrl();
+                }
+
+                if($this->getCancelUrl()){
+                    $parameterArray['cancel_url'] = $this->getCancelUrl();
                 }
 
                 // Unite params:
 
                 if($this->getAppId()) {
-                    $parameterArray['app_id']        = $this->getAppId();
+                    $parameterArray['app_id'] = $this->getAppId();
                 }
 
                 if($this->getFeeAmount()) {
-                    $parameterArray['fee_amount']    = $this->getFeeAmount();
+                    $parameterArray['fee_amount'] = $this->getFeeAmount();
                 }
 
                 if($this->getFeeCurrency()) {
-                    $parameterArray['fee_currency']  = $this->getFeeCurrency();
+                    $parameterArray['fee_currency'] = $this->getFeeCurrency();
                 }
 
                 if($this->getFeePayment()) {
-                    $parameterArray['fee_payment']   = $this->getFeePayment();
+                    $parameterArray['fee_payment'] = $this->getFeePayment();
                 }
 
                 break;
