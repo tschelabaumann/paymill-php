@@ -180,6 +180,11 @@ class Transaction extends Base
     }
 
     /**
+     * @var string
+     */
+    private $_mandateReference;
+
+    /**
      * Returns the origin amount for the transaction.
      *
      * @return integer
@@ -634,5 +639,22 @@ class Transaction extends Base
         $this->_handling_amount = $handling_amount;
 
         return $this;
+    }
+
+    /** Set mandate reference mandate_reference
+     * @param string $mandateReference
+     */
+    public function setMandateReference($mandateReference)
+    {
+        $this->_mandateReference = $mandateReference;
+    }
+
+    /**
+     * Return mandate reference mandate_reference
+     * @return string
+     */
+    public function getMandateReference()
+    {
+        return $this->_mandateReference;
     }
 }
