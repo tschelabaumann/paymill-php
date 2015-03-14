@@ -55,7 +55,8 @@ class TransactionTest extends PHPUnit_Framework_TestCase
             ->setDescription($sample['description'])
             ->setSource($sample['source'])
             ->setShippingAddress($sample['shipping_address'])
-            ->setBillingAddress($sample['billing_address']);
+            ->setBillingAddress($sample['billing_address'])
+            ->setMandateReference($sample['mandate_reference']);
 
         $this->assertEquals($this->_transaction->getAmount(), $sample['amount']);
         $this->assertEquals($this->_transaction->getCurrency(), $sample['currency']);
@@ -70,6 +71,7 @@ class TransactionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->_transaction->getSource(), $sample['source']);
         $this->assertEquals($this->_transaction->getShippingAddress(), $sample['shipping_address']);
         $this->assertEquals($this->_transaction->getBillingAddress(), $sample['billing_address']);
+        $this->assertEquals($this->_transaction->getMandateReference(), $sample['mandate_reference']);
 
         return $this->_transaction;
     }
@@ -89,6 +91,7 @@ class TransactionTest extends PHPUnit_Framework_TestCase
         $transaction->setId($testId);
 
         $creationArray = $transaction->parameterize("create");
+
         $updateArray   = $transaction->parameterize("update");
         $getOneArray   = $transaction->parameterize("getOne");
 
@@ -102,6 +105,7 @@ class TransactionTest extends PHPUnit_Framework_TestCase
             'fee_currency'     => $sample['fee_currency'],
             'description'      => $sample['description'],
             'source'           => $sample['source'],
+            'mandate_reference' => $sample['mandate_reference'],
             'shipping_address' => $sample['shipping_address'],
             'billing_address'  => $sample['billing_address']
         ], $creationArray);
@@ -158,6 +162,7 @@ class TransactionTest extends PHPUnit_Framework_TestCase
             'fee_currency'     => 'EUR',
             'description'      => 'Test Transaction',
             'source'           => 'merchantcenter',
+            'mandate_reference' =>'DE1234TEST',
             'shipping_address' => $shippingAddress,
             'billing_address'  => $billingAddress
         ];
