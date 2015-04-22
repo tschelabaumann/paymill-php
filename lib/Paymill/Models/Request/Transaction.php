@@ -68,6 +68,20 @@ class Transaction extends Base
     private $_source;
 
     /**
+     * Shipping address
+     *
+     * @var $_shippingAddress
+     */
+    private $_shippingAddress;
+
+    /**
+     * Billing address
+     *
+     * @var $_billingAddress
+     */
+    private $_billingAddress;
+
+    /**
      * Creates an instance of the transaction request model
      */
     function __construct()
@@ -279,22 +293,28 @@ class Transaction extends Base
     public function setToken($token)
     {
         $this->_token = $token;
+
         return $this;
     }
 
     /**
-     * Sets the name of origin of the call creating the transaction
-     * @param mixed $source
+     * Sets the name of origin of the call creating the transaction.
+     *
+     * @param string $source
+     *
+     * @return $this
      */
     public function setSource($source)
     {
         $this->_source = $source;
+
         return $this;
     }
 
     /**
-     * Gets the name of origin of the call creating the transaction
-     * @return mixed
+     * Gets the name of origin of the call creating the transaction.
+     *
+     * @return string
      */
     public function getSource()
     {
@@ -302,13 +322,62 @@ class Transaction extends Base
     }
 
     /**
-     * Returns an array of parameters customized for the argumented methodname
-     * @param string $method
+     * Get shipping address
+     *
+     * @return array
+     */
+    public function getShippingAddress()
+    {
+        return $this->_shippingAddress;
+    }
+
+    /**
+     * Set shipping address
+     *
+     * @param array $shippingAddress Shipping address
+     *
+     * @return $this
+     */
+    public function setShippingAddress(array $shippingAddress)
+    {
+        $this->_shippingAddress = $shippingAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get billing address
+     *
+     * @return array
+     */
+    public function getBillingAddress()
+    {
+        return $this->_billingAddress;
+    }
+
+    /**
+     * Set billing address
+     *
+     * @param array $billingAddress Billing address
+     *
+     * @return $this
+     */
+    public function setBillingAddress(array $billingAddress)
+    {
+        $this->_billingAddress = $billingAddress;
+
+        return $this;
+    }
+
+    /**
+     * Returns an array of parameters customized for the given method name.
+     *
+     * @param string $method Method
      * @return array
      */
     public function parameterize($method)
     {
-        $parameterArray = array();
+        $parameterArray = [];
         switch ($method) {
             case 'create':
                 if (!is_null($this->getPreauthorization())) {
@@ -333,6 +402,12 @@ class Transaction extends Base
                 }
                 if(!is_null($this->getSource())) {
                     $parameterArray['source'] = $this->getSource();
+                }
+                if(!is_null($this->getShippingAddress())) {
+                    $parameterArray['shipping_address'] = $this->getShippingAddress();
+                }
+                if(!is_null($this->getBillingAddress())) {
+                    $parameterArray['billing_address'] = $this->getBillingAddress();
                 }
                 break;
             case 'update':

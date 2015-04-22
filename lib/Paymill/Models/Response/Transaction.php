@@ -12,7 +12,6 @@ namespace Paymill\Models\Response;
  */
 class Transaction extends Base
 {
-
     /**
      * 'real' amount
      * @var string
@@ -20,7 +19,98 @@ class Transaction extends Base
     private $_amount;
 
     /**
-     * Returns the 'real' amount
+     * origin amount
+     * @var integer
+     */
+    private $_originAmount;
+
+    /**
+     * Possible status values (open, closed, failed, preauth, pending, refunded, partially_refunded, chargeback)
+     * @var string
+     */
+    private $_status;
+
+    /**
+     * @var string
+     */
+    private $_description;
+
+    /**
+     * @var boolean
+     */
+    private $_livemode;
+
+    /**
+     * @var string
+     */
+    private $_currency;
+
+    /**
+     * @var array
+     */
+    private $_refunds = null;
+
+    /**
+     * Response code for transaction feedback. 20000 marks a successful transaction
+     * @tutorial https://paymill.com/de-de/dokumentation/referenz/api-referenz/#document-statuscodes
+     * @var integer
+     */
+    private $_responseCode;
+
+    /**
+     * Unique identifier of this transaction provided to the acquirer for the statements.
+     * @var string
+     */
+    private $_shortId;
+
+    /**
+     * PAYMILL invoice where the transaction fees are charged or null.
+     * @var array
+     */
+    private $_invoices = null;
+
+    /**
+     * @var Payment
+     */
+    private $_payment;
+
+    /**
+     * @var Client
+     */
+    private $_client = null;
+
+    /**
+     * @var Preauthorization
+     */
+    private $_preauthorization = null;
+
+    /**
+     * @var array
+     */
+    private $_fees;
+
+    /**
+     * @var $_source
+     */
+    private $_source;
+
+    /**
+     * Shipping address
+     *
+     * @var array|null $_shippingAddress
+     */
+    private $_shippingAddress;
+
+    /**
+     * Billing address
+     *
+     * @var array|null $_billingAddress
+     */
+    private $_billingAddress;
+
+    /**
+     * Returns the 'real' amount.
+     *
      * @return string
      */
     public function getAmount()
@@ -30,21 +120,18 @@ class Transaction extends Base
 
     /**
      * Sets the 'real' amount for the transaction.
-     * The number musst be in the smallest currency unit and will be saved as a string
+     * The number must be in the smallest currency unit and will be saved as a string.
+     *
      * @param string $amount
-     * @return \Paymill\Models\Response\Transaction
+     *
+     * @return $this
      */
     public function setAmount($amount)
     {
         $this->_amount = $amount;
+
         return $this;
     }
-
-    /**
-     * origin amount
-     * @var integer
-     */
-    private $_originAmount;
 
     /**
      * Returns the origin amount for the transaction.
@@ -57,21 +144,18 @@ class Transaction extends Base
 
     /**
      * Sets the origin amount for the transaction.
-     * The number musst be in the smallest currency unit and will be saved as a string
+     * The number musst be in the smallest currency unit and will be saved as a string.
+     *
      * @param integer $originAmount
-     * @return \Paymill\Models\Response\Transaction
+     *
+     * @return $this
      */
     public function setOriginAmount($originAmount)
     {
         $this->_originAmount = $originAmount;
+
         return $this;
     }
-
-    /**
-     * Possible status values (open, closed, failed, preauth, pending, refunded, partially_refunded, chargeback)
-     * @var string
-     */
-    private $_status;
 
     /**
      * Returns the transaction status
@@ -83,23 +167,20 @@ class Transaction extends Base
     }
 
     /**
-     * Sets the transaction status
+     * Sets the transaction status.
+     *
      * @param string $status
-     * @return \Paymill\Models\Response\Transaction
+     * @return $this
      */
     public function setStatus($status)
     {
         $this->_status = $status;
+
         return $this;
     }
 
     /**
-     * @var string
-     */
-    private $_description;
-
-    /**
-     * Returns the transaction description
+     * Returns the transaction description.
      * @return string
      */
     public function getDescription()
@@ -108,23 +189,22 @@ class Transaction extends Base
     }
 
     /**
-     * Sets the transaction description
+     * Sets the transaction description.
+     *
      * @param string $description
-     * @return \Paymill\Models\Response\Transaction
+     *
+     * @return $this
      */
     public function setDescription($description)
     {
         $this->_description = $description;
+
         return $this;
     }
 
     /**
-     * @var boolean
-     */
-    private $_livemode;
-
-    /**
-     * Returns the livemode flag of the transaction
+     * Returns the livemode flag of the transaction.
+     *
      * @return boolean
      */
     public function getLivemode()
@@ -133,23 +213,22 @@ class Transaction extends Base
     }
 
     /**
-     * Sets the livemode flag of the transaction
+     * Sets the livemode flag of the transaction.
+     *
      * @param boolean $livemode
-     * @return \Paymill\Models\Response\Transaction
+     *
+     * @return $this
      */
     public function setLivemode($livemode)
     {
         $this->_livemode = $livemode;
+
         return $this;
     }
 
     /**
-     * @var array
-     */
-    private $_refunds = null;
-
-    /**
-     * Returns the refunds stored in the transaction
+     * Returns the refunds stored in the transaction.
+     *
      * @return array|null
      */
     public function getRefunds()
@@ -158,23 +237,22 @@ class Transaction extends Base
     }
 
     /**
-     * Sets the refunds stored in the transaction
+     * Sets the refunds stored in the transaction.
+     *
      * @param array $refunds
-     * @return \Paymill\Models\Response\Transaction
+     *
+     * @return $this
      */
     public function setRefunds($refunds)
     {
         $this->_refunds = $refunds;
+
         return $this;
     }
 
     /**
-     * @var string
-     */
-    private $_currency;
-
-    /**
-     * Returns the currency
+     * Returns the currency.
+     *
      * @return string
      */
     public function getCurrency()
@@ -183,25 +261,22 @@ class Transaction extends Base
     }
 
     /**
-     * Sets the currency
+     * Sets the currency.
+     *
      * @param string $currency
-     * @return \Paymill\Models\Response\Transaction
+     *
+     * @return $this
      */
     public function setCurrency($currency)
     {
         $this->_currency = $currency;
+
         return $this;
     }
 
     /**
-     * Response code for transaction feedback. 20000 marks a successful transaction
-     * @tutorial https://paymill.com/de-de/dokumentation/referenz/api-referenz/#document-statuscodes
-     * @var integer
-     */
-    private $_responseCode;
-
-    /**
      * Returns the response code (20000 marks a successful transaction)
+     *
      * @return integer
      */
     public function getResponseCode()
@@ -211,23 +286,21 @@ class Transaction extends Base
 
     /**
      * Sets the response code of the transaction
+     *
      * @param integer $responseCode
-     * @return \Paymill\Models\Response\Transaction
+     *
+     * @return $this
      */
     public function setResponseCode($responseCode)
     {
         $this->_responseCode = $responseCode;
+
         return $this;
     }
 
     /**
-     * Unique identifier of this transaction provided to the acquirer for the statements.
-     * @var string
-     */
-    private $_shortId;
-
-    /**
      * Returns the short id of the transaction
+     *
      * @return string
      */
     public function getShortId()
@@ -236,24 +309,22 @@ class Transaction extends Base
     }
 
     /**
-     * Sets the transaction short id
+     * Sets the transaction short id.
+     *
      * @param string $shortId
-     * @return \Paymill\Models\Response\Transaction
+     *
+     * @return $this
      */
     public function setShortId($shortId)
     {
         $this->_shortId = $shortId;
+
         return $this;
     }
 
     /**
-     * PAYMILL invoice where the transaction fees are charged or null.
-     * @var array
-     */
-    private $_invoices = null;
-
-    /**
-     * Returns an array of invoices stored in the transaction
+     * Returns an array of invoices stored in the transaction.
+     *
      * @return array|null
      */
     public function getInvoices()
@@ -262,24 +333,23 @@ class Transaction extends Base
     }
 
     /**
-     * Stores an array of invoices in the transaction
+     * Stores an array of invoices in the transaction.
+     *
      * @param array $invoices
-     * @return \Paymill\Models\Response\Transaction
+     *
+     * @return $this
      */
     public function setInvoices($invoices)
     {
         $this->_invoices = $invoices;
+
         return $this;
     }
 
     /**
-     * @var \Paymill\Models\Response\Payment
-     */
-    private $_payment;
-
-    /**
-     * Returns the payment associated with the transaction
-     * @return \Paymill\Models\Response\Payment
+     * Returns the payment associated with the transaction.
+     *
+     * @return Payment
      */
     public function getPayment()
     {
@@ -287,24 +357,23 @@ class Transaction extends Base
     }
 
     /**
-     * Sets the Payment for the transcation
-     * @param \Paymill\Models\Response\Payment $payment
-     * @return \Paymill\Models\Response\Transaction
+     * Sets the Payment for the transaction.
+     *
+     * @param Payment $payment
+     *
+     * @return $this
      */
     public function setPayment($payment)
     {
         $this->_payment = $payment;
+
         return $this;
     }
 
     /**
-     * @var \Paymill\Models\Response\Client
-     */
-    private $_client = null;
-
-    /**
-     * Returns the Client associated with the transaction. If no client is available null will be returned
-     * @return \Paymill\Models\Response\Client|null
+     * Returns the Client associated with the transaction. If no client is available null will be returned.
+     *
+     * @return Client|null
      */
     public function getClient()
     {
@@ -313,23 +382,22 @@ class Transaction extends Base
 
     /**
      * Sets the Client for the transaction
-     * @param \Paymill\Models\Response\Client $client
-     * @return \Paymill\Models\Response\Transaction
+     *
+     * @param Client $client
+     *
+     * @return $this
      */
     public function setClient($client)
     {
         $this->_client = $client;
+
         return $this;
     }
 
     /**
-     * @var \Paymill\Models\Response\Preauthorization
-     */
-    private $_preauthorization = null;
-
-    /**
-     * Returns the Preauthorization associated with the transaction. If no preAuth is available null will be returned
-     * @return \Paymill\Models\Response\Preauthorization|null
+     * Returns the Preauthorization associated with the transaction. If no preAuth is available null will be returned.
+     *
+     * @return Preauthorization|null
      */
     public function getPreauthorization()
     {
@@ -337,20 +405,18 @@ class Transaction extends Base
     }
 
     /**
-     * Sets the Preauthorization for the transaction
-     * @param \Paymill\Models\Response\Preauthorization $preauthorization
-     * @return \Paymill\Models\Response\Transaction
+     * Sets the Preauthorization for the transaction.
+     *
+     * @param Preauthorization $preauthorization
+     *
+     * @return $this
      */
     public function setPreauthorization($preauthorization)
     {
         $this->_preauthorization = $preauthorization;
+
         return $this;
     }
-
-    /**
-     * @var array
-     */
-    private $_fees;
 
     /**
      * Returns the fee array stored in the transaction
@@ -364,37 +430,87 @@ class Transaction extends Base
 
     /**
      * Sets the Fees array for the transaction
+     *
      * @param array $fees
-     * @return \Paymill\Models\Response\Transaction
+     *
+     * @return $this
      */
     public function setFees($fees)
     {
         $this->_fees = $fees;
+
         return $this;
     }
 
     /**
-     * @var $_source
-     */
-    private $_source;
-
-    /**
-     * Sets the name of origin of the call creating the transaction
-     * @param mixed $source
+     * Sets the name of origin of the call creating the transaction.
+     *
+     * @param string $source
+     *
+     * @return $this
      */
     public function setSource($source)
     {
         $this->_source = $source;
+
         return $this;
     }
 
     /**
      * Gets the name of origin of the call creating the transaction
-     * @return mixed
+     *
+     * @return string
      */
     public function getSource()
     {
         return $this->_source;
     }
 
+    /**
+     * Get shipping address
+     *
+     * @return array|null
+     */
+    public function getShippingAddress()
+    {
+        return $this->_shippingAddress;
+    }
+
+    /**
+     * Set shipping address
+     *
+     * @param array|null $shippingAddress Shipping address
+     *
+     * @return $this
+     */
+    public function setShippingAddress($shippingAddress)
+    {
+        $this->_shippingAddress = $shippingAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get billing address
+     *
+     * @return array|null
+     */
+    public function getBillingAddress()
+    {
+        return $this->_billingAddress;
+    }
+
+    /**
+     * Set billing address
+     *
+     * @param array|null $billingAddress Billing address
+     *
+     * @return $this
+     */
+    public function setBillingAddress($billingAddress)
+    {
+        $this->_billingAddress = $billingAddress;
+
+        return $this;
+    }
 }
