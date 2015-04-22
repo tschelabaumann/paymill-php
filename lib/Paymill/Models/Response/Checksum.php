@@ -36,6 +36,13 @@ class Checksum extends Base
     private $_data;
 
     /**
+     * Embed code
+     *
+     * @var string HTML/JS
+     */
+    private $_embedCode;
+
+    /**
      * Returns the checksum
      *
      * @return string
@@ -83,6 +90,30 @@ class Checksum extends Base
     }
 
     /**
+     * Get embedCode
+     *
+     * @return string
+     */
+    public function getEmbedCode()
+    {
+        return $this->_embedCode;
+    }
+
+    /**
+     * Set embedCode
+     *
+     * @param string $embedCode embedCode
+     *
+     * @return $this
+     */
+    public function setEmbedCode($embedCode)
+    {
+        $this->_embedCode = $embedCode;
+
+        return $this;
+    }
+
+    /**
      * Get data
      *
      * @return string
@@ -104,5 +135,18 @@ class Checksum extends Base
         $this->_data = $data;
 
         return $this;
+    }
+
+    /**
+     * Returns url encoded checksum data as array
+     *
+     * @return array
+     */
+    public function getDataAsArray()
+    {
+        $checksumData = null;
+        parse_str($this->getData(), $checksumData);
+
+        return $checksumData;
     }
 }
