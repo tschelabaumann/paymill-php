@@ -366,7 +366,7 @@ class Transaction extends Base
     /**
      * Sets the transaction short id.
      *
-     * @param string $shortId Short Id
+     * @param string $shortId
      *
      * @return $this
      */

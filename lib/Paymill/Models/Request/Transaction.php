@@ -539,8 +539,10 @@ class Transaction extends Base
 
     /**
      * Set mandate reference
+     *
      * @param string $mandateReference
-     * @return \Paymill\Models\Request\Subscription
+     *
+     * @return $this
      */
     public function setMandateReference($mandateReference)
     {
@@ -601,6 +603,12 @@ class Transaction extends Base
                 }
                 if (!is_null($this->getMandateReference())) {
                     $parameterArray['mandate_reference'] = $this->getMandateReference();
+                }
+                if(!is_null($this->getShippingAddress())) {
+                    $parameterArray['shipping_address'] = $this->getShippingAddress();
+                }
+                if(!is_null($this->getBillingAddress())) {
+                    $parameterArray['billing_address'] = $this->getBillingAddress();
                 }
                 break;
             case 'update':

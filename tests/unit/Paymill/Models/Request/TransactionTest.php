@@ -91,7 +91,6 @@ class TransactionTest extends PHPUnit_Framework_TestCase
         $transaction->setId($testId);
 
         $creationArray = $transaction->parameterize("create");
-
         $updateArray   = $transaction->parameterize("update");
         $getOneArray   = $transaction->parameterize("getOne");
 
