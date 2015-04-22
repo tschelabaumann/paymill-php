@@ -3,6 +3,7 @@
 namespace Paymill\Services;
 
 use Paymill\Models\Response as Models;
+use Paymill\Models\Response\Checksum;
 use Paymill\Models\Response\Error;
 
 /**
@@ -11,7 +12,7 @@ use Paymill\Models\Response\Error;
 class ResponseHandler
 {
 
-    private $_errorCodes = array(
+    private $_errorCodes = [
         10001 => "General undefined response.",
         10002 => "Still waiting on something.",
         20000 => "General success response.",
@@ -49,7 +50,7 @@ class ResponseHandler
         50501 => "Timeout on side of the acquirer.",
         50502 => "Risk management transaction timeout.",
         50600 => "Duplicate transaction.",
-    );
+    ];
 
     /**
      * Converts a response to a model
@@ -106,6 +107,9 @@ class ResponseHandler
                 break;
             case 'fraud':
                 $model = $this->_createFraud($response);
+                break;
+            case 'checksum':
+                $model = $this->_createChecksum($response);
                 break;
         }
 
@@ -330,6 +334,29 @@ class ResponseHandler
     }
 
     /**
+     * Creates and fills a checksum model
+     *
+     * @param array $response
+     * @return Checksum
+     */
+    private function _createChecksum($response)
+    {
+        $model = new Checksum();
+        $model->setId($response['id']);
+        $model->setChecksum($response['checksum']);
+        $model->setData($response['data']);
+        $model->setType($response['type']);
+        $model->setAppId($response['app_id']);
+        if(isset($response['embed_code'])) {
+            $model->setEmbedCode($response['embed_code']);
+        }
+        $model->setCreatedAt($response['created_at']);
+        $model->setUpdatedAt($response['updated_at']);
+        
+        return $model;
+    }
+
+    /**
      * Handles the multidimensional param arrays during model creation
      * @param array $response
      * @param string $resourceName
@@ -341,7 +368,7 @@ class ResponseHandler
         if (isset($response['id'])) {
             $result = $this->_convertResponseToModel($response, $resourceName);
         } else if (!is_null($response)) {
-            $paymentArray = array();
+            $paymentArray = [];
             foreach ($response as $paymentData) {
                 array_push($paymentArray, $this->_convertResponseToModel($paymentData, $resourceName));
             }
@@ -376,7 +403,7 @@ class ResponseHandler
                 $errorModel->setRawObject($this->convertResponse($response['body']['data'], $resourceName));
             } catch (\Exception $e) { }
         }
-        
+
         if (isset($response['body'])) {
             if (is_array($response['body'])) {
                 if (isset($response['body']['error'])) {
@@ -436,7 +463,7 @@ class ResponseHandler
      */
     public function arrayToObject($array)
     {
-        return is_array($array) ? (object) array_map(array($this, 'arrayToObject'), $array) : $array;
+        return is_array($array) ? (object) array_map([$this, 'arrayToObject'], $array) : $array;
     }
 
 }
