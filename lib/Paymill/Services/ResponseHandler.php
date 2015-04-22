@@ -352,7 +352,7 @@ class ResponseHandler
         }
         $model->setCreatedAt($response['created_at']);
         $model->setUpdatedAt($response['updated_at']);
-        
+
         return $model;
     }
 

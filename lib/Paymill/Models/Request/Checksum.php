@@ -15,6 +15,15 @@ namespace Paymill\Models\Request;
 class Checksum extends Base
 {
     /**
+     * Different checksum types which will enable different validations for
+     * the input parameters.
+     */
+    const TYPE_POSTFINANCE_CARD    = 'postfinance_card';
+    const TYPE_PAYPAL              = 'paypal';
+    const TYPE_CREDIT_CARD         = 'creditcard';
+    const TYPE_DEBIT               = 'debit';
+
+    /**
      * @var string
      */
     private $_checksumType = null;
