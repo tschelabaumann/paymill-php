@@ -14,38 +14,50 @@ class Transaction extends Base
 {
     /**
      * 'real' amount
+     *
      * @var string
      */
     private $_amount;
 
     /**
      * origin amount
+     *
      * @var integer
      */
     private $_originAmount;
 
     /**
+     * Status
      * Possible status values (open, closed, failed, preauth, pending, refunded, partially_refunded, chargeback)
+     *
      * @var string
      */
     private $_status;
 
     /**
+     * Description
+     *
      * @var string
      */
     private $_description;
 
     /**
+     * Live mode
+     *
      * @var boolean
      */
     private $_livemode;
 
     /**
+     * Currency
+     *
      * @var string
      */
     private $_currency;
 
     /**
+     * Refunds
+     *
      * @var array
      */
     private $_refunds = null;
@@ -53,43 +65,56 @@ class Transaction extends Base
     /**
      * Response code for transaction feedback. 20000 marks a successful transaction
      * @tutorial https://paymill.com/de-de/dokumentation/referenz/api-referenz/#document-statuscodes
+     *
      * @var integer
      */
     private $_responseCode;
 
     /**
      * Unique identifier of this transaction provided to the acquirer for the statements.
+     *
      * @var string
      */
     private $_shortId;
 
     /**
      * PAYMILL invoice where the transaction fees are charged or null.
+     *
      * @var array
      */
     private $_invoices = null;
 
     /**
+     * Payment
+     *
      * @var Payment
      */
     private $_payment;
 
     /**
+     * Client
+     *
      * @var Client
      */
     private $_client = null;
 
     /**
+     * Preauthorization
+     *
      * @var Preauthorization
      */
     private $_preauthorization = null;
 
     /**
+     * Fees
+     *
      * @var array
      */
     private $_fees;
 
     /**
+     * Source
+     *
      * @var $_source
      */
     private $_source;
@@ -109,6 +134,27 @@ class Transaction extends Base
     private $_billingAddress;
 
     /**
+     * Items
+     *
+     * @var array $_items
+     */
+    private $_items;
+
+    /**
+     * Shipping amount
+     *
+     * @var int $_shipping_amount
+     */
+    private $_shipping_amount;
+
+    /**
+     * Handling amount
+     *
+     * @var int $_handling_amount
+     */
+    private $_handling_amount;
+
+    /**
      * Returns the 'real' amount.
      *
      * @return string
@@ -122,7 +168,7 @@ class Transaction extends Base
      * Sets the 'real' amount for the transaction.
      * The number must be in the smallest currency unit and will be saved as a string.
      *
-     * @param string $amount
+     * @param string $amount Amount
      *
      * @return $this
      */
@@ -135,6 +181,7 @@ class Transaction extends Base
 
     /**
      * Returns the origin amount for the transaction.
+     *
      * @return integer
      */
     public function getOriginAmount()
@@ -144,9 +191,9 @@ class Transaction extends Base
 
     /**
      * Sets the origin amount for the transaction.
-     * The number musst be in the smallest currency unit and will be saved as a string.
+     * The number must be in the smallest currency unit and will be saved as a string.
      *
-     * @param integer $originAmount
+     * @param integer $originAmount Origin amount
      *
      * @return $this
      */
@@ -159,6 +206,7 @@ class Transaction extends Base
 
     /**
      * Returns the transaction status
+     *
      * @return string
      */
     public function getStatus()
@@ -169,7 +217,8 @@ class Transaction extends Base
     /**
      * Sets the transaction status.
      *
-     * @param string $status
+     * @param string $status Status
+     *
      * @return $this
      */
     public function setStatus($status)
@@ -181,6 +230,7 @@ class Transaction extends Base
 
     /**
      * Returns the transaction description.
+     *
      * @return string
      */
     public function getDescription()
@@ -191,7 +241,7 @@ class Transaction extends Base
     /**
      * Sets the transaction description.
      *
-     * @param string $description
+     * @param string $description Description
      *
      * @return $this
      */
@@ -215,7 +265,7 @@ class Transaction extends Base
     /**
      * Sets the livemode flag of the transaction.
      *
-     * @param boolean $livemode
+     * @param boolean $livemode Live mode
      *
      * @return $this
      */
@@ -239,7 +289,7 @@ class Transaction extends Base
     /**
      * Sets the refunds stored in the transaction.
      *
-     * @param array $refunds
+     * @param array $refunds Refunds
      *
      * @return $this
      */
@@ -263,7 +313,7 @@ class Transaction extends Base
     /**
      * Sets the currency.
      *
-     * @param string $currency
+     * @param string $currency Currency
      *
      * @return $this
      */
@@ -287,7 +337,7 @@ class Transaction extends Base
     /**
      * Sets the response code of the transaction
      *
-     * @param integer $responseCode
+     * @param integer $responseCode Response code
      *
      * @return $this
      */
@@ -311,7 +361,7 @@ class Transaction extends Base
     /**
      * Sets the transaction short id.
      *
-     * @param string $shortId
+     * @param string $shortId Short Id
      *
      * @return $this
      */
@@ -335,7 +385,7 @@ class Transaction extends Base
     /**
      * Stores an array of invoices in the transaction.
      *
-     * @param array $invoices
+     * @param array $invoices Invoices
      *
      * @return $this
      */
@@ -359,7 +409,7 @@ class Transaction extends Base
     /**
      * Sets the Payment for the transaction.
      *
-     * @param Payment $payment
+     * @param Payment $payment Payment
      *
      * @return $this
      */
@@ -383,7 +433,7 @@ class Transaction extends Base
     /**
      * Sets the Client for the transaction
      *
-     * @param Client $client
+     * @param Client $client Client
      *
      * @return $this
      */
@@ -407,7 +457,7 @@ class Transaction extends Base
     /**
      * Sets the Preauthorization for the transaction.
      *
-     * @param Preauthorization $preauthorization
+     * @param Preauthorization $preauthorization Preauthorization
      *
      * @return $this
      */
@@ -431,7 +481,7 @@ class Transaction extends Base
     /**
      * Sets the Fees array for the transaction
      *
-     * @param array $fees
+     * @param array $fees Fees
      *
      * @return $this
      */
@@ -445,7 +495,7 @@ class Transaction extends Base
     /**
      * Sets the name of origin of the call creating the transaction.
      *
-     * @param string $source
+     * @param string $source Source
      *
      * @return $this
      */
@@ -510,6 +560,78 @@ class Transaction extends Base
     public function setBillingAddress($billingAddress)
     {
         $this->_billingAddress = $billingAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get items
+     *
+     * @return array
+     */
+    public function getItems()
+    {
+        return $this->_items;
+    }
+
+    /**
+     * Set items
+     *
+     * @param array $items Items
+     *
+     * @return $this
+     */
+    public function setItems($items)
+    {
+        $this->_items = $items;
+
+        return $this;
+    }
+
+    /**
+     * Get shipping amount
+     *
+     * @return int
+     */
+    public function getShippingAmount()
+    {
+        return $this->_shipping_amount;
+    }
+
+    /**
+     * Set shipping amount
+     *
+     * @param int $shipping_amount Shipping amount
+     *
+     * @return $this
+     */
+    public function setShippingAmount($shipping_amount)
+    {
+        $this->_shipping_amount = $shipping_amount;
+
+        return $this;
+    }
+
+    /**
+     * Get handling amount
+     *
+     * @return int
+     */
+    public function getHandlingAmount()
+    {
+        return $this->_handling_amount;
+    }
+
+    /**
+     * Set handling amount
+     *
+     * @param int $handling_amount Handling amount
+     *
+     * @return $this
+     */
+    public function setHandlingAmount($handling_amount)
+    {
+        $this->_handling_amount = $handling_amount;
 
         return $this;
     }
