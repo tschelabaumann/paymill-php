@@ -74,6 +74,41 @@ class Checksum extends Base
     private $_feePayment = null;
 
     /**
+     * Shipping address
+     *
+     * @var array $_shippingAddress
+     */
+    private $_shippingAddress;
+
+    /**
+     * Billing address
+     *
+     * @var array $_billingAddress
+     */
+    private $_billingAddress;
+
+    /**
+     * Items
+     *
+     * @var array $_items
+     */
+    private $_items;
+
+    /**
+     * Shipping amount
+     *
+     * @var int $_shipping_amount
+     */
+    private $_shipping_amount;
+
+    /**
+     * Handling amount
+     *
+     * @var int $_handling_amount
+     */
+    private $_handling_amount;
+
+    /**
      * Creates an instance of the checksum request model
      */
     function __construct()
@@ -324,6 +359,126 @@ class Checksum extends Base
     }
 
     /**
+     * Get shipping address
+     *
+     * @return array
+     */
+    public function getShippingAddress()
+    {
+        return $this->_shippingAddress;
+    }
+
+    /**
+     * Set shipping address
+     *
+     * @param array $shippingAddress Shipping address
+     *
+     * @return $this
+     */
+    public function setShippingAddress(array $shippingAddress)
+    {
+        $this->_shippingAddress = $shippingAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get billing address
+     *
+     * @return array
+     */
+    public function getBillingAddress()
+    {
+        return $this->_billingAddress;
+    }
+
+    /**
+     * Set billing address
+     *
+     * @param array $billingAddress Billing address
+     *
+     * @return $this
+     */
+    public function setBillingAddress(array $billingAddress)
+    {
+        $this->_billingAddress = $billingAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get items
+     *
+     * @return array
+     */
+    public function getItems()
+    {
+        return $this->_items;
+    }
+
+    /**
+     * Set items
+     *
+     * @param array $items Items
+     *
+     * @return $this
+     */
+    public function setItems(array $items)
+    {
+        $this->_items = $items;
+
+        return $this;
+    }
+
+    /**
+     * Get shipping amount
+     *
+     * @return int
+     */
+    public function getShippingAmount()
+    {
+        return $this->_shipping_amount;
+    }
+
+    /**
+     * Set shipping_amount
+     *
+     * @param int $shipping_amount Shipping amount
+     *
+     * @return $this
+     */
+    public function setShippingAmount($shipping_amount)
+    {
+        $this->_shipping_amount = $shipping_amount;
+
+        return $this;
+    }
+
+    /**
+     * Get handling amount
+     *
+     * @return int
+     */
+    public function getHandlingAmount()
+    {
+        return $this->_handling_amount;
+    }
+
+    /**
+     * Set handling amount
+     *
+     * @param int $handling_amount Handling amount
+     *
+     * @return $this
+     */
+    public function setHandlingAmount($handling_amount)
+    {
+        $this->_handling_amount = $handling_amount;
+
+        return $this;
+    }
+
+    /**
      * Returns an array of parameters customized for the given method name
      *
      * @param string $method
@@ -364,6 +519,26 @@ class Checksum extends Base
 
                 if($this->getCancelUrl()){
                     $parameterArray['cancel_url'] = $this->getCancelUrl();
+                }
+
+                if($this->getShippingAddress()) {
+                    $parameterArray['shipping_address'] = $this->getShippingAddress();
+                }
+
+                if($this->getBillingAddress()) {
+                    $parameterArray['billing_address'] = $this->getBillingAddress();
+                }
+
+                if($this->getItems()) {
+                    $parameterArray['items'] = $this->getItems();
+                }
+
+                if($this->getShippingAmount()) {
+                    $parameterArray['shipping_amount'] = $this->getShippingAmount();
+                }
+
+                if($this->getHandlingAmount()) {
+                    $parameterArray['handling_amount'] = $this->getHandlingAmount();
                 }
 
                 // Unite params:
