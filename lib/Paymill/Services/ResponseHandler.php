@@ -423,25 +423,24 @@ class ResponseHandler
     }
 
     /**
-     * Validates the data responsed by the API
+     * Validates the data responded by the API
+     * Just checks the header status is successful.
      *
-     * Only Refund, Transaction and Preauthorization return an response_code
      * @param array $response
-     * @return boolean
+     *
+     * @return boolean True if valid
      */
     public function validateResponse($response)
     {
         $returnValue = false;
-        if ($response['header']['status'] == 200) {
-            if (isset($response['body']['data']['response_code'])) {
-                $returnValue = false;
-                if ($response['body']['data']['response_code'] == 20000) {
-                    $returnValue = true;
-                }
-            } else {
-                $returnValue = true;
-            }
+        if (isset($response['header'])
+            && isset($response['header']['status'])
+            && $response['header']['status'] >= 200
+            && $response['header']['status'] < 300
+        ) {
+            $returnValue = true;
         }
+
         return $returnValue;
     }
 
