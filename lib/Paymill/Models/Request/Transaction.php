@@ -560,7 +560,7 @@ class Transaction extends Base
      */
     public function parameterize($method)
     {
-        $parameterArray = [];
+        $parameterArray = array();
         switch ($method) {
             case 'create':
                 if (!is_null($this->getPreauthorization())) {

@@ -40,14 +40,14 @@ class ChecksumTest extends PHPUnit_Framework_TestCase
      */
     public function setGetTest()
     {
-        $sample = [
+        $sample = array(
             'checksum_type' => Request\Checksum::TYPE_PAYPAL,
             'amount'        => '200',
             'currency'      => 'EUR',
             'description'   => 'foo bar',
             'return_url'    => 'https://www.example.com',
             'cancel_url'    => 'https://www.example.com',
-            'shipping_address' => [
+            'shipping_address' => array(
                 'name' => 'Noch ein test',
                 'street_address' => 'Unit street',
                 'street_address_additional' => 'uff',
@@ -56,8 +56,8 @@ class ChecksumTest extends PHPUnit_Framework_TestCase
                 'state' => 'BAVARIA',
                 'country' => 'DE',
                 'phone' => '0892353453'
-            ],
-            'billing_address' => [
+            ),
+            'billing_address' => array(
                 'name' => 'Noch ein test',
                 'street_address' => 'Unit street',
                 'street_address_additional' => 'uff',
@@ -66,28 +66,28 @@ class ChecksumTest extends PHPUnit_Framework_TestCase
                 'state' => 'BAVARIA',
                 'country' => 'DE',
                 'phone' => '0892353453'
-            ],
-            'items' => [
-                [
+            ),
+            'items' => array(
+                array(
                     'name' => 'Foo',
                     'description' => 'Bar',
                     'item_number' => 'PROD1',
                     'url' => 'http://www.foo.de',
                     'amount' => '200',
                     'quantity' => 1
-                ],
-                [
+                ),
+                array(
                     'name' => 'Foo',
                     'description' => 'bock auf testing',
                     'item_number' => 'PROD2',
                     'url' => 'http://www.bar.de',
                     'amount' => '200',
                     'quantity' => 1
-                ]
-            ],
+                )
+            ),
             'shipping_amount' => '50',
             'handling_amount' => '50'
-        ];
+        );
 
         $this->_model
             ->setChecksumType($sample['checksum_type'])
@@ -126,10 +126,10 @@ class ChecksumTest extends PHPUnit_Framework_TestCase
     public function parameterizeTestGetOne(Request\Checksum $model)
     {
         $model->setId('chk_123');
-        $parameterArray = [
+        $parameterArray = array(
             'count' => 1,
             'offset' => 0
-        ];
+        );
 
         $creationArray = $model->parameterize("getOne");
 
@@ -150,7 +150,7 @@ class ChecksumTest extends PHPUnit_Framework_TestCase
         $parameterArray['description']   = 'foo bar';
         $parameterArray['return_url']    = 'https://www.example.com';
         $parameterArray['cancel_url']    = 'https://www.example.com';
-        $parameterArray['shipping_address'] = [
+        $parameterArray['shipping_address'] = array(
             'name' => 'Noch ein test',
             'street_address' => 'Unit street',
             'street_address_additional' => 'uff',
@@ -159,8 +159,8 @@ class ChecksumTest extends PHPUnit_Framework_TestCase
             'state' => 'BAVARIA',
             'country' => 'DE',
             'phone' => '0892353453'
-        ];
-        $parameterArray['billing_address'] = [
+        );
+        $parameterArray['billing_address'] = array(
             'name' => 'Noch ein test',
             'street_address' => 'Unit street',
             'street_address_additional' => 'uff',
@@ -169,25 +169,25 @@ class ChecksumTest extends PHPUnit_Framework_TestCase
             'state' => 'BAVARIA',
             'country' => 'DE',
             'phone' => '0892353453'
-        ];
-        $parameterArray['items'] = [
-            [
+        );
+        $parameterArray['items'] = array(
+            array(
                 'name' => 'Foo',
                 'description' => 'Bar',
                 'item_number' => 'PROD1',
                 'url' => 'http://www.foo.de',
                 'amount' => '200',
                 'quantity' => 1
-            ],
-            [
+            ),
+            array(
                 'name' => 'Foo',
                 'description' => 'bock auf testing',
                 'item_number' => 'PROD2',
                 'url' => 'http://www.bar.de',
                 'amount' => '200',
                 'quantity' => 1
-            ]
-        ];
+            )
+        );
         $parameterArray['shipping_amount'] = '50';
         $parameterArray['handling_amount'] = '50';
 
@@ -195,5 +195,4 @@ class ChecksumTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($creationArray, $parameterArray);
     }
-
 }

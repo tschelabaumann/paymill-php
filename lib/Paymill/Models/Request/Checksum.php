@@ -487,7 +487,7 @@ class Checksum extends Base
      */
     public function parameterize($method)
     {
-        $parameterArray = [];
+        $parameterArray = array();
         switch ($method) {
             case 'getOne':
                 $parameterArray['count'] = 1;

@@ -611,17 +611,17 @@ class ResponseHandlerTest extends PHPUnit_Framework_TestCase
 
     public function testValidateResponseIssetFalse()
     {
-        $this->assertFalse($this->_responseHandler->validateResponse([]));
+        $this->assertFalse($this->_responseHandler->validateResponse(array()));
     }
 
     public function testValidateResponseStatusFalse()
     {
-        $this->assertFalse($this->_responseHandler->validateResponse(['header' => ['status' => 404]]));
+        $this->assertFalse($this->_responseHandler->validateResponse(array('header' => array('status' => 404))));
     }
 
     public function testValidateResponseStatusTrue()
     {
-        $this->assertTrue($this->_responseHandler->validateResponse(['header' => ['status' => 200]]));
+        $this->assertTrue($this->_responseHandler->validateResponse(array('header' => array('status' => 200))));
     }
 
 

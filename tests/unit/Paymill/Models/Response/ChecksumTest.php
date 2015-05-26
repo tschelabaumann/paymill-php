@@ -51,13 +51,13 @@ class ChecksumTest
         $this->_model->setEmbedCode('<form></form>');
 
         $this->assertEquals($this->_model->getData(), 'test=foo&foo[bar1]=test1&foo[bar2]=test2');
-        $this->assertEquals($this->_model->getDataAsArray(), [
+        $this->assertEquals($this->_model->getDataAsArray(), array(
             'test' => 'foo',
-            'foo' => [
+            'foo' => array(
                 'bar1' => 'test1',
                 'bar2' => 'test2'
-            ]
-        ]);
+            )
+        ));
         $this->assertEquals($this->_model->getType(), 'creditcard');
         $this->assertEquals($this->_model->getChecksum(), 'foo-checksum');
         $this->assertEquals($this->_model->getAppId(), 'app_123');

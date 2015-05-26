@@ -12,7 +12,7 @@ use Paymill\Models\Response\Error;
 class ResponseHandler
 {
 
-    private $_errorCodes = [
+    private $_errorCodes = array(
         10001 => "General undefined response.",
         10002 => "Still waiting on something.",
         20000 => "General success response.",
@@ -50,7 +50,7 @@ class ResponseHandler
         50501 => "Timeout on side of the acquirer.",
         50502 => "Risk management transaction timeout.",
         50600 => "Duplicate transaction.",
-    ];
+    );
 
     /**
      * Converts a response to a model
@@ -368,7 +368,7 @@ class ResponseHandler
         if (isset($response['id'])) {
             $result = $this->_convertResponseToModel($response, $resourceName);
         } else if (!is_null($response)) {
-            $paymentArray = [];
+            $paymentArray = array();
             foreach ($response as $paymentData) {
                 array_push($paymentArray, $this->_convertResponseToModel($paymentData, $resourceName));
             }

@@ -127,7 +127,7 @@ class TransactionTest extends PHPUnit_Framework_TestCase
      */
     private function getSampleData()
     {
-        $shippingAddress = [
+        $shippingAddress = array(
             'name'                    => 'Sam Shippy',
             'street_address'          => 'St. Cajetanstr. 43',
             'street_address_addition' => '5. OG',
@@ -136,9 +136,9 @@ class TransactionTest extends PHPUnit_Framework_TestCase
             'state'                   => 'Bayern',
             'country'                 => 'DE',
             'phone'                   => '+49 89 189 045 300'
-        ];
+        );
 
-        $billingAddress = [
+        $billingAddress = array(
             'name'                    => 'Biff Billy',
             'street_address'          => 'St. Cajetanstr. 43',
             'street_address_addition' => '5. OG',
@@ -147,9 +147,9 @@ class TransactionTest extends PHPUnit_Framework_TestCase
             'state'                   => 'Bayern',
             'country'                 => 'DE',
             'phone'                   => '+49 89 189 045 300'
-        ];
+        );
 
-        $sample = [
+        $sample = array(
             'amount'           => '4200', // e.g. "4200" for 42.00 EUR
             'currency'         => 'EUR', // ISO 4217
             'payment'          => 'pay_2f82a672574647cd911d',
@@ -164,7 +164,7 @@ class TransactionTest extends PHPUnit_Framework_TestCase
             'mandate_reference' =>'DE1234TEST',
             'shipping_address' => $shippingAddress,
             'billing_address'  => $billingAddress
-        ];
+        );
 
         return $sample;
     }
